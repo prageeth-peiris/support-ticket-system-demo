@@ -2,6 +2,6 @@
 
 @section('content')
 
-
+@livewire('check-ticket-status')
 
 @endsection

@@ -11,4 +11,9 @@ class Ticket extends Model
 
     protected $fillable = ['customer_name','email','phone','problem','ref_no'];
 
+    public function reply(){
+        return $this->hasOne(Reply::class,'ticket_id');
+    }
+
+
 }
