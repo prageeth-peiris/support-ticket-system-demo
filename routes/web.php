@@ -14,5 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.guest');
 });
+
+
+Route::get('/new-ticket', function () {
+    return view('pages.new-ticket');
+})->name('new-ticket');
+
+Route::get('/ticket-status', function () {
+    return view('pages.ticket-status');
+})->name('ticket-status');
