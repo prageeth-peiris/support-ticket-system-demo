@@ -10,8 +10,10 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
 
 class TicketResource extends Resource
 {
@@ -51,6 +53,15 @@ class TicketResource extends Resource
                 Tables\Columns\TextColumn::make('phone'),
                // Tables\Columns\TextColumn::make('problem'),
                 Tables\Columns\TextColumn::make('ref_no'),
+                TextColumn::make('reply_exists')->exists('reply')->formatStateUsing(function($state){
+
+                    if($state){
+                        return "Replied";
+                    }
+
+                    return "NEW";
+
+                })->label("Status")
               //  Tables\Columns\TextColumn::make('created_at')
                //     ->dateTime(),
                // Tables\Columns\TextColumn::make('updated_at')
