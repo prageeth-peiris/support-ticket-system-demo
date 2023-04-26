@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Ticket;
 use Awcodes\Shout\Shout;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Contracts\HasForms;
 use Livewire\Component;
 use Filament\Forms;
@@ -16,6 +17,8 @@ class CheckTicketStatus extends Component implements HasForms
     public $ref_no;
 
     public $ticket;
+
+    public $reply;
 
     public function render()
     {
@@ -37,10 +40,17 @@ class CheckTicketStatus extends Component implements HasForms
                         return "Your Ticket is still  under review";
                     }
 
+                    return "Here is the last reply to your Ticket";
+
                 })
                 ->type('info') // defaults to info
                 ->columnSpan('full')
                 ->hidden(fn() => empty($this->ref_no) ),
+            Textarea::make('reply')
+                ->rows(10)
+                ->cols(20)
+            ->hidden(fn() => is_null($this->reply) )
+
 
 
         ];
@@ -55,6 +65,8 @@ class CheckTicketStatus extends Component implements HasForms
 
 
         $this->ticket = $ticket;
+
+        $this->reply = $ticket?->reply?->reply;
 
 
     }
