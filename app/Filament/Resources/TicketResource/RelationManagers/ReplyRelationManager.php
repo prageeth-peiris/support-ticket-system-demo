@@ -2,14 +2,12 @@
 
 namespace App\Filament\Resources\TicketResource\RelationManagers;
 
-use Filament\Forms;
+use App\Actions\Emails\SendReplyAsAnEmail;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
-use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables;;
 
 class ReplyRelationManager extends RelationManager
 {
@@ -38,7 +36,18 @@ class ReplyRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                ->after(function(RelationManager $livewire){
+
+                    $reply = $livewire->ownerRecord->reply->reply;
+                    $customer_email = $livewire->ownerRecord->email;
+                    $ref_no = $livewire->ownerRecord->ref_no;
+
+                    SendReplyAsAnEmail::dispatch($customer_email,$reply,$ref_no);
+
+                })
+
+                ,
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
