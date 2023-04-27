@@ -19,6 +19,8 @@ class SendReplyAsAnEmail
         ";
 
 
+        return ;  //return as mail server is not configured
+
         Mail::raw($email_message, function (Message $message) use ($email) {
             $message->to($email)
                 ->from(config('mail.from.address'));

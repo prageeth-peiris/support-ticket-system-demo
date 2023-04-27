@@ -16,6 +16,8 @@ class SendTicketAcknowledgementEmail
 $email_message = "We received your ticket . Your ticket Ref. no {$ticket_ref_no}";
 
 
+   return ;  //return as mail server is not configured
+
         Mail::raw($email_message, function (Message $message) use ($email) {
             $message->to($email)
                 ->from(config('mail.from.address'));
