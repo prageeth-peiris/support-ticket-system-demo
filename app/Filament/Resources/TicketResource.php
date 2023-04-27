@@ -11,9 +11,6 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Log;
 
 class TicketResource extends Resource
 {
@@ -61,7 +58,14 @@ class TicketResource extends Resource
 
                     return "NEW";
 
-                })->label("Status")
+                })->label("Status")->color(function($record){
+
+                    if($record->reply_exists){
+                        return "success";
+                    }
+
+                    return "primary";
+                })
               //  Tables\Columns\TextColumn::make('created_at')
                //     ->dateTime(),
                // Tables\Columns\TextColumn::make('updated_at')
