@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\Emails\SendTicketAcknowledgementEmail;
 use App\Models\Ticket;
 use Awcodes\Shout\Shout;
 use Filament\Forms\Components\Textarea;
@@ -52,6 +53,7 @@ class AddTicketForm extends Component implements HasForms
     {
 
         $ref_no = $this->generateRefNo();
+        $this->ref_no = $ref_no;
 
         $ticket = new Ticket([
 
@@ -66,7 +68,9 @@ class AddTicketForm extends Component implements HasForms
 
         $ticket->save();
 
-        $this->ref_no = $ref_no;
+        SendTicketAcknowledgementEmail::dispatch($this->customer_email,$ref_no);
+
+
 
 
     }
